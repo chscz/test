@@ -19,7 +19,7 @@ func (sh *ShortLinkHandler) Redirect(c echo.Context) error {
 	p := influxdb2.NewPoint("data",
 		map[string]string{"id": shortLink.ID},
 		map[string]interface{}{"url": shortLink.URL},
-		time.Now())
+		time.Now().UTC())
 	sh.wAPI.WritePoint(p)
 	// Flush writes
 	sh.wAPI.Flush()

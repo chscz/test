@@ -31,5 +31,11 @@ func InitMariadb(cfg config.MariaDB) (*gorm.DB, error) {
 		return nil, fmt.Errorf("gorm open failed : %w", err)
 	}
 
+	conn, err := db.DB()
+	if err != nil {
+		return nil, fmt.Errorf("gorm db failed : %w", err)
+	}
+	conn.SetMaxIdleConns(3)
+	conn.SetMaxOpenConns(3)
 	return db, nil
 }
